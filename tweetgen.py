@@ -33,13 +33,15 @@ class TweetGenerator:
             tweet_amount (int): How much tweets to generate
             break_symbol (str): Breaking symbol
         """
-        self._tweets_counter = tweet_amount
+        # Blocking memory overusing
+        self._tweets_counter = tweet_amount if tweet_amount < 10000 else 500
         self._tweets = []
         self._break_symbol = (
                 break_symbol if break_symbol is not None and
                                 break_symbol in string.punctuation
                 else LINE_BREAK
         )
+        self.__inner_count = tweet_amount
 
     def __iter__(self):
         return self
@@ -85,7 +87,12 @@ class TweetGenerator:
         self._tweets_counter -= 1
         # Friendly UI :)
         if self._tweets_counter % 30 == 0:
-            return 'Work in progress....'
+            percent_done = format(
+                round((1 - self._tweets_counter / self.__inner_count) * 100, 2)
+            )
+            return (f'Work in progress....'
+                    f'{percent_done}%'
+                    ' percents done')
 
     def create_output_file(self):
         """ Tweet file generation. Output file will be stored
