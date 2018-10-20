@@ -1,9 +1,38 @@
+import argparse
 from collections import Counter
 import re
 from pprint import pprint
+import os
+
+
+def is_file_valid(filepath):
+    """ Function checks whether file is OK or not (also verify UTF-8)
+
+    Returns:
+        filepath: Path to file.
+
+    Notes:
+        Path to file will be returned only if no errors occurred
+    """
+    if not os.path.isfile(filepath):
+        raise TypeError('Not file')
+    if os.path.splitext(filepath)[-1].lower() != '.txt':
+        raise TypeError('Not .txt file')
+    try:
+        with open(filepath, 'rb+') as file:
+            file.read().decode('utf-8')
+    except UnicodeDecodeError:
+        return None
+    return filepath
 
 
 def parse_input_file(filepath):
+    """ Function which extracts 10 most used hashtags from array of tweets and
+        then finds 5 most used words for every hashtag from 10's list
+
+    Args:
+        filepath: path to file (*.txt)
+    """
     words = re.findall(r'#(\w+)', open(filepath).read())
     popular_tweets = {
         word: Counter() for word in dict(Counter(words).most_common(10)).keys()
@@ -22,6 +51,7 @@ def parse_input_file(filepath):
     # In case of real project it is better to use map or generator
     [
         popular_tweets[word].update(
+            # TODO: Make replace work only on copies of original tweets list
             Counter(
                 re.findall(r'(\w+)', tweet.replace(f'#{word}', ''))
             )
@@ -44,4 +74,17 @@ def parse_input_file(filepath):
     print(f'\nVerification output - {top_five_words_for_tags_verification}')
 
 
-parse_input_file('in.txt')
+def parse_args():
+    """ Standard realisation of parsing args from console input """
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        'path',
+        help='Provide path to file',
+    )
+    return parser.parse_args()
+
+
+if __name__ == '__main__':
+    parsed_args = parse_args()
+    parse_input_file(is_file_valid(parse_args().path))
+
