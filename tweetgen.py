@@ -6,14 +6,28 @@ import argparse
 from faker.providers import lorem
 import random
 
+# Constants for excluding hardcode redundancy
 TWEET_LENGTH = 140
 LINE_BREAK = '\n'
+
+__all__ = (
+    'TWEET_LENGTH',
+    'LINE_BREAK',
+    'TweetGenerator',
+    'GenerationException',
+)
+
+
+class GenerationException(Exception):
+    """ Custom Exception for the TweetGenerator
+        Raise when tweets where not generated
+    """
 
 
 class TweetGenerator:
 
     def __init__(self, tweet_amount, break_symbol=None):
-        """ Fake tweets Fabric. Realisation accept user break symbol
+        """ Fake tweets fabric. It is possible to use user's break symbol
 
         Args:
             tweet_amount (int): How much tweets to generate
@@ -69,6 +83,23 @@ class TweetGenerator:
             raise StopIteration
         self.create_tweet()
         self._tweets_counter -= 1
+        # Friendly UI :)
+        if self._tweets_counter % 30 == 0:
+            return 'Work in progress....'
+
+    def create_output_file(self):
+        """ Tweet file generation. Output file will be stored
+            in the same directory where script stored.
+        """
+        if self._tweets_counter != 0 or len(self._tweets) == 0:
+            raise GenerationException('No tweets generated')
+        try:
+            with open('in.txt', 'w+') as file:
+                file.write("".join(self._tweets))
+        except OSError:
+            raise OSError(
+                "File wasn't written. Check dir (write) permissions"
+            )
 
     def __str__(self):
         return str(len(self._tweets))
@@ -77,11 +108,31 @@ class TweetGenerator:
         return str(len(self._tweets))
 
 
+def parse_args():
+    """ Standard realisation of parsing args from console input """
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        'tweet_number',
+        type=int,
+        help='Integer value of how much tweets you want to generate',
+    )
+    parser.add_argument(
+        '--separator',
+        type=str,
+        help='String value. Separator between tweets',
+    )
+    return parser.parse_args()
+
+
 if __name__ == '__main__':
-    generator = TweetGenerator(50)
-    for _ in generator:
+    arguments = parse_args()
+    generator = TweetGenerator(arguments.tweet_number, arguments.separator)
+    for msg in generator:
         # This implementation give us space to correct
         # every tweet behaviour later (if needed)
         # Ex: Generating seed from random patterns
-        pass
-    pprint(generator._tweets)
+        if msg is not None:
+            pprint(msg)
+        else:
+            pass
+    generator.create_output_file()
