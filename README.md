@@ -1,11 +1,13 @@
 # naumen-py-junior-test-case
 ### Python 3.6. Counter for 10 popular tweets and their 5 most-common words
 
-Since there were no information about in.txt file I decided to create a generator myself. How does it work?
+Since there were no information about in.txt file I decided to create a tweet generator myself. How does it work?
 
 #### Fake tweets generator
 
 ```tweetgen.py (tweet amount) --separator (line separator if needed)```
+
+The output of this function is in.txt that will be stored in the same directory where script is and will be filled with fake tweets.
 
 Please make sure you have installed everything from requirements.txt
 
