@@ -5,25 +5,21 @@ Since there were no information about in.txt file I decided to create a generato
 
 #### Fake tweets generator
 
-```python
-tweetgen.py (tweet amount) --separator (line separator if needed)
-```
+```tweetgen.py (tweet amount) --separator (line separator if needed)```
 
-Please make sure you have installed everything from requirements.txt ```pip install -r requirements.txt```
+Please make sure you have installed everything from requirements.txt
+
+```pip install -r requirements.txt```
 
 #### Tweet parser
 
-Original script doing it's work only for ```python
-\n
-``` separator. But it's only about correct regex, so I decided to omit this part, because no specification were given and there 2 places where it should be changed, so it'll be easy enough to track down and solve this case.
+Original script doing it's work only for ```\n``` separator. Nevertheless it's only about correct regex pattern, so I decided to omit this part, because no specification were given. Besides, it'll be easy enough to track down and solve this case, because of lack of regex usage.
 
-```python
-tweetparse.py (path to file)
-```
+```tweetparse.py (path to file)```
 
-For both commands help is available.
+For both scripts ```--help``` command is available.
 
-####NOTE
+#### NOTE
 
 If I understood this task incorrectly and file should be opened from the start of the function I'd like to take 1 more day to correct it and do it with [this library](https://click.palletsprojects.com/en/7.x/) instead of argparse.
 
