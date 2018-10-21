@@ -47,7 +47,7 @@ def parse_input_file(filepath):
     # Any character combination except \n (new line)
     tweets = re.findall(r'.+', open(filepath).read())
     # List comp used here because of best readability (it's working slower btw)
-    # There where no words about speed and accuracy, only about readability
+    # There were no words about speed and accuracy, only about readability
     # In case of real project it is better to use map or generator
     [
         popular_tweets[word].update(
