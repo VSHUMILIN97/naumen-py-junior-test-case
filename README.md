@@ -5,15 +5,21 @@ Since there were no information about in.txt file I decided to create a generato
 
 #### Fake tweets generator
 
-```python3 tweetgen.py (tweet amount) --separator (line separator if needed)```
+```python
+tweetgen.py (tweet amount) --separator (line separator if needed)
+```
 
-Please make sure you have installed everything from requirements.txt ```bash pip install -r requirements.txt```
+Please make sure you have installed everything from requirements.txt ```pip install -r requirements.txt```
 
 #### Tweet parser
 
-Original script doing it's work only for ```python3 \n``` separator. But it's only about correct regex, so I decided to omit this part, because no specification were given and there 2 places where it should be changed, so it'll be easy enough to track down and solve this case.
+Original script doing it's work only for ```python
+\n
+``` separator. But it's only about correct regex, so I decided to omit this part, because no specification were given and there 2 places where it should be changed, so it'll be easy enough to track down and solve this case.
 
-```python3 tweetparse.py (path to file)```
+```python
+tweetparse.py (path to file)
+```
 
 For both commands help is available.
 
@@ -23,4 +29,5 @@ If I understood this task incorrectly and file should be opened from the start o
 
 #### How it works(both scripts / gif)
 **Caution - small res :(**
+
 ![ALT TEXT](https://media.giphy.com/media/9A58TG4bpyupJXI0Wq/giphy.gif)
