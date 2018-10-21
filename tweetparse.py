@@ -33,7 +33,7 @@ def parse_input_file(filepath):
     Args:
         filepath: path to file (*.txt)
     """
-    words = re.findall(r'#(\w+)', open(filepath).read())
+    words = re.findall(r'[#][^\s#]+', open(filepath).read())
     popular_tweets = {
         word: Counter() for word in dict(Counter(words).most_common(10)).keys()
     }
@@ -46,18 +46,17 @@ def parse_input_file(filepath):
 
     # Any character combination except \n (new line)
     tweets = re.findall(r'.+', open(filepath).read())
-    # List comp is used because of best readability (it's working slower btw)
+    # List comp used here because of best readability (it's working slower btw)
     # There where no words about speed and accuracy, only about readability
     # In case of real project it is better to use map or generator
     [
         popular_tweets[word].update(
-            # TODO: Make replace work only on copies of original tweets list
             Counter(
-                re.findall(r'(\w+)', tweet.replace(f'#{word}', ''))
+                re.findall(r'(?u)(?<![#])\b\w\w+\b', tweet)
             )
         )
         for word in popular_tweets.keys()
-        for tweet in tweets if f'#{word}' in tweet
+        for tweet in tweets if word in tweet
     ]
     top_five_words_for_tags = {
         key: list(dict(popular_tweets[key].most_common(5)).keys())
