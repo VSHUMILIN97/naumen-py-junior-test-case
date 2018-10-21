@@ -5,6 +5,9 @@ import string
 import argparse
 from faker.providers import lorem
 import random
+# Bad practice, but I did __all__ after all
+from word_list import *
+
 
 # Constants for excluding hardcode redundancy
 TWEET_LENGTH = 140
@@ -51,11 +54,12 @@ class TweetGenerator:
         fake = Factory.create()
         fake.add_provider(lorem)
         hashtag_picks = random.randint(0, 3)
+        # Use BODYTEXT instead of None for less spreading in word generation
         tweet_body = fake.text(max_nb_chars=80, ext_word_list=None)
         tweet_hashtags = (
             [f'#{hashtag} ' for hashtag in fake.words(
                 nb=hashtag_picks,
-                ext_word_list=None,
+                ext_word_list=None,  # Use HASHTAGS for the same reason
                 unique=False
             )]
         )
@@ -121,7 +125,11 @@ def parse_args():
     parser.add_argument(
         'tweet_number',
         type=int,
-        help='Integer value of how much tweets you want to generate',
+        help=(
+            'Integer value. Input how much tweets you want to generate. '
+            'If you will try to generate over 10000 tweets '
+            'script will pick 500 as default.'
+        ),
     )
     parser.add_argument(
         '--separator',
