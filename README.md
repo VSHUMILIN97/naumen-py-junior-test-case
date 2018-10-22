@@ -1,6 +1,8 @@
 # naumen-py-junior-test-case
 ### Python 3.6. Counter for 10 popular tweets and their 5 most-common words
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2f04f5b4155446509980f411183f5d8d)](https://www.codacy.com/app/VSHUMILIN97/naumen-py-junior-test-case?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=VSHUMILIN97/naumen-py-junior-test-case&amp;utm_campaign=Badge_Grade)
+
 Since there were no information about in.txt file I decided to create a tweet generator myself. How does it work?
 
 #### Fake tweets generator
